@@ -2,120 +2,248 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Happy Rose Day Prabhat 🌹</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Character Video Player</title>
 
 <style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0f0f14, #2a0033);
-    transition: background 0.6s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
 
-  .app {
-    width: 95%;
-    max-width: 420px;
-  }
+body{
+  background:linear-gradient(135deg,#ff416c,#ff4b2b);
+  color:white;
+  overflow:hidden;
+}
 
-  .card {
-    background: rgba(0,0,0,0.45);
-    backdrop-filter: blur(10px);
-    border-radius: 18px;
-    padding: 14px;
-    margin-bottom: 16px;
-    cursor: pointer;
-    box-shadow: 0 15px 40px rgba(0,0,0,.6);
-    transition: transform .25s;
-  }
+.page{
+  width:100%;
+  height:100vh;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  animation:fade 1s ease;
+}
 
-  .card:hover {
-    transform: scale(1.03);
-  }
+.page.active{display:flex;}
 
-  .thumb {
-    width: 100%;
-    height: 190px;
-    border-radius: 14px;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
+h1{font-size:2.5rem;margin-bottom:15px;}
+p{font-size:1.1rem;max-width:520px;line-height:1.7;}
 
-  .name {
-    text-align: center;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 600;
-  }
+.sender{
+  margin-top:18px;
+  font-style:italic;
+  opacity:0.85;
+}
 
-  .player {
-    display: none;
-    margin-top: 20px;
-  }
+button{
+  margin-top:25px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#ff2b55;
+  font-size:1rem;
+  cursor:pointer;
+}
 
-  video {
-    width: 100%;
-    border-radius: 18px;
-    background: black;
-  }
+.flowers{
+  display:flex;
+  gap:30px;
+  margin-top:30px;
+}
+
+.flower{
+  font-size:3.2rem;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.flower:hover{
+  transform:scale(1.3) rotate(8deg);
+}
+
+/* hearts */
+.hearts{position:fixed;inset:0;pointer-events:none;}
+.heart{
+  position:absolute;
+  font-size:18px;
+  animation:float 6s linear infinite;
+  opacity:.7;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* hidden youtube */
+#ytplayer{
+  position:absolute;
+  width:1px;
+  height:1px;
+  opacity:0;
+}
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="hearts"></div>
 
-  <!-- YiXuan -->
-  <div class="card" onclick="playVideo('videos/yixuan.mp4','yixuan')">
-    <img class="thumb" src="thumbs/yixuan.jpg" alt="YiXuan">
-    <div class="name">YiXuan</div>
+<!-- YouTube song (plays on rose click) -->
+<iframe id="ytplayer"
+src="https://www.youtube.com/embed/RzSIDoA1ZDw?enablejsapi=1"
+allow="autoplay"
+frameborder="0"></iframe>
+
+<!-- PAGE 1 -->
+<div class="page active">
+  <h1>🌹 Happy Rose Day 🌹</h1>
+  <p>
+    Rose Day is about expressing feelings<br>
+    with softness, warmth, and respect.
+  </p>
+  <button onclick="nextPage()">Start 🌸</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <h1>Hey Prabhat 😊</h1>
+  <p>
+    Some people don’t need special days to be appreciated,
+    but today is a perfect excuse to remind you.
+  </p>
+  <div class="sender">— From: <b>Sneha</b></div>
+  <button onclick="nextPage()">Next 🌹</button>
+</div>
+
+<!-- FLOWER SELECTION -->
+<div class="page">
+  <h1>Choose a Rose 🌹</h1>
+  <p>(Tip: one rose hides a secret)</p>
+
+  <div class="flowers">
+    <div class="flower" 
+         onclick="openRose()" 
+         ondblclick="openSecret()">🌹</div>
+    <div class="flower" onclick="openFlower(1)">🌷</div>
+    <div class="flower" onclick="openFlower(2)">🌼</div>
   </div>
+</div>
 
-  <!-- Yidhari -->
-  <div class="card" onclick="playVideo('videos/yidhari.mp4','yidhari')">
-    <img class="thumb" src="thumbs/yidhari.jpg" alt="Yidhari">
-    <div class="name">Yidhari</div>
-  </div>
+<!-- ROSE PAGE -->
+<div class="page">
+  <h1>🌹 A Rose for You</h1>
+  <p>
+    This rose represents respect, admiration,
+    and the comfort of having a genuine friend.
+  </p>
+  <div class="sender">— Warm wishes, Sneha</div>
+  <button onclick="nextPage()">Next ✨</button>
+</div>
 
-  <!-- Jane Doe -->
-  <div class="card" onclick="playVideo('videos/jane.mp4','jane')">
-    <img class="thumb" src="thumbs/jane.jpg" alt="Jane Doe">
-    <div class="name">Jane Doe</div>
-  </div>
+<!-- FLOWER 2 -->
+<div class="page">
+  <h1>🌷</h1>
+  <p>
+    A soft flower for the calm
+    and positivity you bring.
+  </p>
+  <button onclick="nextPage()">Next 🌼</button>
+</div>
 
-  <!-- Video Player -->
-  <div class="player" id="playerBox">
-    <video id="video" controls autoplay playsinline></video>
-  </div>
+<!-- FLOWER 3 -->
+<div class="page">
+  <h1>🌼</h1>
+  <p>
+    Bright like this flower,
+    your energy makes moments better.
+  </p>
+  <button onclick="nextPage()">Final 🌹</button>
+</div>
 
+<!-- FINAL PAGE -->
+<div class="page">
+  <h1>🌹 Happy Rose Day 🌹</h1>
+  <p>
+    May your days be filled with smiles,
+    peace, and good vibes always.
+  </p>
+  <div class="sender">— From Sneha 💫</div>
+</div>
+
+<!-- 🔐 SECRET PAGE -->
+<div class="page">
+  <h1>🌹 Secret Rose 🌹</h1>
+  <p>
+    Prabhat,<br>
+    this rose is not for everyone to see.<br><br>
+    It’s for the quiet respect,
+    the unspoken care,
+    and the comfort of knowing
+    you exist just the way you are.
+  </p>
+  <div class="sender">— Always, Sneha ❤️</div>
 </div>
 
 <script>
-function playVideo(src, character) {
-  const video = document.getElementById("video");
-  const box = document.getElementById("playerBox");
+let pages=document.querySelectorAll('.page');
+let index=0;
 
-  video.pause();
-  video.src = src;
-  video.load();
-  box.style.display = "block";
-  video.play();
-
-  if (character === "jane") {
-    document.body.style.background =
-      "linear-gradient(135deg, #2a0010, #7a1f3d)";
-  } else if (character === "yixuan") {
-    document.body.style.background =
-      "linear-gradient(135deg, #001a33, #004466)";
-  } else if (character === "yidhari") {
-    document.body.style.background =
-      "linear-gradient(135deg, #22002a, #5c2b7a)";
+function nextPage(){
+  pages[index].classList.remove('active');
+  index++;
+  if(index<pages.length){
+    pages[index].classList.add('active');
   }
 }
+
+function openFlower(i){
+  pages[index].classList.remove('active');
+  index=4+i;
+  pages[index].classList.add('active');
+}
+
+function openRose(){
+  pages[index].classList.remove('active');
+  index=3;
+  pages[index].classList.add('active');
+
+  document.getElementById("ytplayer").src =
+   "https://www.youtube.com/embed/RzSIDoA1ZDw?autoplay=1";
+}
+
+function openSecret(){
+  pages[index].classList.remove('active');
+  index=7;
+  pages[index].classList.add('active');
+}
+
+// hearts
+const hearts=document.querySelector('.hearts');
+setInterval(()=>{
+  let h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='❤';
+  h.style.left=Math.random()*100+'vw';
+  h.style.fontSize=(14+Math.random()*20)+'px';
+  h.style.animationDuration=(4+Math.random()*4)+'s';
+  hearts.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},300);
 </script>
 
 </body>
